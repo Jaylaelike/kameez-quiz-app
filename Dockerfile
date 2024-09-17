@@ -37,7 +37,7 @@ COPY --from=base /app/dist ./dist
 COPY . .
 
 # Expose the port that the application will run on
-EXPOSE 5174
+EXPOSE 3005
 
 # Command to run the application
-CMD [ "pnpm", "dev", "--", "--port", "5174", "--host" ]
+CMD [ "pnpm", "dev"]
