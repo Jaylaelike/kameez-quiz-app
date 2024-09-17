@@ -8,7 +8,7 @@ WORKDIR /app
 RUN npm i -g pnpm
 
 # Copy only the necessary files for dependency installation
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies using pnpm with frozen lockfile
 RUN pnpm install --frozen-lockfile
@@ -29,7 +29,7 @@ WORKDIR /app
 RUN npm i -g pnpm
 
 # Copy necessary files from the base stage
-COPY --from=base /app/package.json /app/pnpm-lock.yaml /app/pnpm-workspace.yaml ./
+COPY --from=base /app/package.json /app/pnpm-lock.yaml ./
 COPY --from=base /app/node_modules ./node_modules
 COPY --from=base /app/dist ./dist
 
