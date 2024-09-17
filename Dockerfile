@@ -28,6 +28,8 @@ WORKDIR /app
 # Install pnpm globally
 RUN npm i -g pnpm
 
+RUN pnpm run build
+
 # Copy necessary files from the base stage
 COPY --from=base /app/package.json /app/pnpm-lock.yaml ./
 COPY --from=base /app/node_modules ./node_modules
@@ -35,6 +37,8 @@ COPY --from=base /app/dist ./dist
 
 # Copy the rest of the application code
 COPY . .
+
+
 
 # Expose the port that the application will run on
 EXPOSE 3005
