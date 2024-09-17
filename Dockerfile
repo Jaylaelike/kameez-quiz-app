@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:16-alpine
+FROM node:20-alpine
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -7,14 +7,11 @@ WORKDIR /app
 # Copy the package.json and pnpm-lock.yaml files to the container
 COPY package.json pnpm-lock.yaml ./
 
-# Install pnpm globally
-RUN npm install -g pnpm
+RUN pnpm install --frozen-lockfile
 
-# Install project dependencies using pnpm
-RUN pnpm install
-
-# Copy the rest of the application source code to the container
 COPY . .
+RUN pnpm update
+RUN pnpm --no-bail build
 
 # Build the Svelte application
 RUN pnpm run build
