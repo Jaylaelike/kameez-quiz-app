@@ -1,25 +1,25 @@
-FROM node:lts-alpine
+# Use the official Node.js image as the base image
+FROM node:16-alpine
 
-WORKDIR /tmp
-RUN apk add gpg gpg-agent && \
-  wget -qO - https://keybase.io/pnpm/pgp_keys.asc | gpg --import && \
-  wget -q https://get.pnpm.io/SHASUMS256.txt && \
-  wget -q https://get.pnpm.io/SHASUMS256.txt.sig && \
-  gpg --verify SHASUMS256.txt.sig SHASUMS256.txt && \
-  wget https://get.pnpm.io/v6.16.js && \
-  grep v6.16.js SHASUMS256.txt | sha256sum -c - && \
-  cat v6.16.js | node - add --global pnpm && \
-  rm SHASUMS256.txt v6.16.js
-
+# Set the working directory inside the container
 WORKDIR /app
-COPY pnpm-lock.yaml ./
-RUN pnpm fetch --dev
 
-ADD . ./
-RUN pnpm install --offline --dev
+# Copy the package.json and pnpm-lock.yaml files to the container
+COPY package.json pnpm-lock.yaml ./
 
+# Install pnpm globally
+RUN npm install -g pnpm
+
+# Install project dependencies using pnpm
+RUN pnpm install
+
+# Copy the rest of the application source code to the container
+COPY . .
+
+# Build the Svelte application
 RUN pnpm run build
 
+# Expose the port that the application will run on
 EXPOSE 5174
 
 CMD [ "pnpm", "dev", "--", "--port", "5174", "--host" ]
