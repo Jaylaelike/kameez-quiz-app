@@ -1,8 +1,10 @@
 import { writable, type Writable } from "svelte/store";
-import { NetService, PacketTypes, type Packet, type ConnectPacket, GameState, type ChangeGameStatePacket, type QuestionAnswerPacket, type PlayerRevealPacket } from "../net";
+import { NetService, PacketTypes, type Packet, type ConnectPacket, GameState, type ChangeGameStatePacket, type QuestionAnswerPacket, type PlayerRevealPacket, type LeaderboardPacket, type LeaderboardEntry } from "../net";
 
 export const state: Writable<GameState> = writable(GameState.Lobby);
 export const points: Writable<number> = writable(0);
+
+export const leaderboard: Writable<LeaderboardEntry[]> = writable([]);
 
 export class PlayerGame {
     private net: NetService;
@@ -44,6 +46,14 @@ export class PlayerGame {
                 points.set(data.points);
                 break;
             }
+
+            case PacketTypes.Leaderboard:{
+                let data = packet as LeaderboardPacket;
+                leaderboard.set(data.points);
+                break;
+            }
+
+
         }
     }
 }

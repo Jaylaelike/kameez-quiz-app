@@ -6,6 +6,11 @@
     import PlayerPlayView from "./PlayerPlayView.svelte";
     import PlayerRevealView from "./PlayerRevealView.svelte";
 
+
+
+  import PlayerEndView from "./PlayerEndView.svelte";
+
+
     let game = new PlayerGame();
     let active = false;
 
@@ -13,16 +18,21 @@
         active = true;
     }
 
+
     let views: Record<GameState, any> = {
         [GameState.Lobby]: PlayerLobbyView,
         [GameState.Play]: PlayerPlayView,
         [GameState.Reveal]: PlayerRevealView,
-        [GameState.Intermission]: PlayerRevealView
+        [GameState.Intermission]: PlayerRevealView,
+        [GameState.End]: PlayerEndView
     };
 </script>
+
 
 {#if active}
     <svelte:component this={views[$state]} {game} />
 {:else}
     <PlayerJoinView on:join={onJoin} {game} />
 {/if}
+
+
