@@ -28,7 +28,7 @@
         {/each}
     {:else}
         <div class="p-8">
-            <p class="text-2xl">Lightning fast?</p>
+            <p class="text-2xl">คุณตอบแล้ว โปรดรอทุกคนตอบเสร็จพร้อมกัน</p>
         </div>
     {/if}
 </div>

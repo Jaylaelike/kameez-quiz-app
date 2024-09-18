@@ -1,24 +1,31 @@
-FROM node:19 as build
-
-ENV NODE_ENV=production 
-
+# Stage 1: Build the application
+FROM node:lts-slim AS build
 
 WORKDIR /app
 
-COPY package.json ./
-COPY package-lock.json ./
+COPY package*.json ./
 RUN npm install
-COPY . ./
+
+COPY . .
 RUN npm run build
 
-
-FROM node:19-alpine3.16
+# Stage 2: Serve the application
+FROM node:lts-slim
 
 WORKDIR /app
-COPY --from=build /app .
+
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/package-lock.json ./package-lock.json
+
+# Install only production dependencies
+RUN npm install --only=production
+
+# Install Vite globally to ensure it's available
+RUN npm install -g vite
 
 
+EXPOSE 5173
 ENV HOST=0.0.0.0
-EXPOSE 3005
 
-CMD ["npm","run", "dev","--", "--host", "0.0.0.0"]
+CMD ["vite", "--host"]
