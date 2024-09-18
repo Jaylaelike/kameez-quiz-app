@@ -10,7 +10,7 @@
     }
 </script>
 
-<div class="p-8 bg-purple-500 min-h-screen w-full">
+<div class="p-8 bg-gradient-to-r from-amber-500 to-pink-500 min-h-screen w-full">
     <div class="flex justify-end">
         <Button on:click={start}>Start game</Button>
     </div>

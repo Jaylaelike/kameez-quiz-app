@@ -15,7 +15,7 @@
     }
 </script>
 
-<div class="bg-purple-400 min-h-screen w-full flex items-center justify-center">
+<div class="bg-gradient-to-r from-amber-500 to-pink-500 min-h-screen w-full flex items-center justify-center">
     <div>
         <h2 class="text-white font-bold text-8xl text-center">Ka-Meeeezzz</h2>
         <div class="flex flex-col gap-2 mt-10 items-center">

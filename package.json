@@ -22,7 +22,9 @@
     "vite": "^5.4.1"
   },
   "dependencies": {
+    "framer-motion": "^11.5.4",
     "sirv-cli": "^2.0.2",
+    "svelte-motion": "^0.12.2",
     "svelte-spa-router": "^4.0.1"
   }
 }
